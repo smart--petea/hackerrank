@@ -38,20 +38,21 @@
     )
   )
 
-(print (parse-array "3 3 4 5 6" 5))
+(defun compute-index(index n k)
+  (mod (- index k) n)
+  )
 
 
-;(let* 
-;      ((first-line "3 2 3")
-;       (second-line "1 2 3")
-;       (query 0)
-;       arr
-;       )
-;      (multiple-value-bind (n k q) (parse-first-line first-line)
-;        (print n)
-;        (print k)
-;        (print q)
-;        (setf arr (parse-array second-line n))
-;        (print arr)
-;        )
-;      )
+(let* 
+      ((first-line (read-line));"3 2 3")
+       (second-line (read-line));"1 2 3")
+       (query 0)
+       arr
+       )
+      (multiple-value-bind (n k q) (parse-first-line first-line)
+        (setf arr (parse-array second-line n))
+        (dotimes (i q) 
+          (print (svref arr (compute-index (parse-integer (read-line)) n k)))
+          )
+        )
+      )

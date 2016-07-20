@@ -15,8 +15,8 @@
 
 (defun process-case()
   (let (
-        (nk "4 3")
-        (times "-1 -1 2 1")
+        (nk (read-line))
+        (times (read-line))
         )
     (multiple-value-bind (N K) (parse-nk nk)
       (do* (
@@ -31,17 +31,15 @@
         (setf pos1 (position-if #'is-space times :start pos0))
         (setf nmbr (parse-integer (subseq times pos0 pos1)))
         (when (<= nmbr 0) (incf k-index))
-        (when (equal k-index K) (return-from process-case 'NO))
-        (when (null pos1) (return-from process-case 'NO))
-
-        (setf pos0 (1+ pos1))
+		(when (equal k-index K) (return-from process-case 'NO))
+		(unless (null pos1) (setf pos0 (1+ pos1)))
       )
     )
   )
   )
 
 
-(do ((tt 1 (1- tt)))
+(do ((tt (parse-integer (read-line)) (1- tt)))
     ((zerop tt))
-    (format t "~A" (process-case))
+    (format t "~&~A" (process-case))
     )

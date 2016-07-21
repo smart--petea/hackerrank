@@ -32,13 +32,13 @@
     )
   )
 
-(destructuring-bind (n1 n2 n3) (parse-3-str "5 3 4")
-  (let* ((stck1 (read-stack n1 "3 2 1 1 1"))
-        (stck2 (read-stack n2 "4 3 2"))
-        (stck3 (read-stack n3 "1 1 4 1"))
+(destructuring-bind (n1 n2 n3) (parse-3-str (read-line))
+  (let* ((stck1 (read-stack n1 (read-line)))
+        (stck2 (read-stack n2 (read-line)))
+        (stck3 (read-stack n3 (read-line)))
         (height (car (reduce #'intersection (list stck1 stck2 stck3))))
         )
-    (print height)
+    (format t "~A" height)
     )
   )
 

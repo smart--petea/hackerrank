@@ -4,17 +4,19 @@
   )
 
 (defun read-stack(size str)
-  (do* ((lst nil)
-        (pos0 0)
-        pos1
+  (do* ((lst '(0))
+        pos0
+        (pos1 nil)
         (index 0 (1+ index))
         nmbr
+        (sum 0)
         )
-    ((equal index size) (maplist #'(lambda(e) (apply #'+ e)) (reverse (cons 0 lst))))
-    (setf pos1 (position-if #'is-space str :start pos0))
+    ((equal index size) lst)
+    (setf pos0 (position-if #'is-space str :end pos1 :from-end t))
+    (if (null pos0) (setf pos0 0))
     (setf nmbr (parse-integer (subseq str pos0 pos1)))
-    (setf lst (cons nmbr lst))
-    (when (not (null pos1)) (setf pos0 (1+ pos1)))
+    (setf lst (cons (incf sum nmbr) lst))
+    (setf pos1  pos0)
     )
   )
 
@@ -32,10 +34,10 @@
     )
   )
 
-(destructuring-bind (n1 n2 n3) (parse-3-str (read-line))
-  (let* ((stck1 (read-stack n1 (read-line)))
-        (stck2 (read-stack n2 (read-line)))
-        (stck3 (read-stack n3 (read-line)))
+(destructuring-bind (n1 n2 n3) (parse-3-str "5 3 4");(read-line))
+  (let* ((stck1 (read-stack n1 "3 2 1 1 1"));(read-line)))
+        (stck2 (read-stack n2 "4 3 2"));(read-line)))
+        (stck3 (read-stack n3 "1 1 4 1"));(read-line)))
         (height (car (reduce #'intersection (list stck1 stck2 stck3))))
         )
     (format t "~A" height)

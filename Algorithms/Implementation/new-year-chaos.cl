@@ -8,7 +8,7 @@
        (pos0 0)
        pos1
        (current-nmbr nil)
-
+       diff
        )
     ((> index size) bribe-cnt)
 
@@ -16,12 +16,10 @@
     (setf current-nmbr (parse-integer (subseq str pos0 pos1)))
     (unless (null pos1) (setf pos0 (1+ pos1)))
 
-    (if (AND (>= index 2) (> index current-nmbr) )
-        (if (> (- index current-nmbr) 2)
-          (return-from process-str "Too chaotic")
-          (incf bribe-cnt (- index current-nmbr))
+    (setf diff (- current-nmbr index))
+    (cond ((> diff 2) (return-from process-str "Too chaotic"))
+          ((> diff 0) (incf bribe-cnt diff))
           )
-        )
     )
   )
 
@@ -30,6 +28,6 @@
      (tt-index 0 (1+ tt-index))
      )
   ((equal tt-index tt))
-  (format t "~&~A" (process-str  (parse-integer "8") "1 2 5 3 7 8 6 4"))
+  (format t "~&~A" (process-str  (parse-integer (read-line)) (read-line)))
   )
 

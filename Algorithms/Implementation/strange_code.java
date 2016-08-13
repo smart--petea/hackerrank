@@ -4,16 +4,19 @@ import java.util.*;
 public class strange_code {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int t = in.nextInt();
+        String tStr = in.next();
 
-        int index = 1;
-        int distance = 3;
+        java.math.BigInteger t = new java.math.BigInteger(tStr);
 
-        while(index + distance < t) {
-            index += distance;
-            distance = 2 * distance;
+        java.math.BigInteger  index = new java.math.BigInteger("1");
+        java.math.BigInteger  distance = new java.math.BigInteger("3");
+
+        while(index.add(distance).compareTo(t) == -1) {
+            index = index.add(distance);
+            distance = distance.add(distance);
         }
 
-        System.out.println( t == (index + distance) ? (t + 2) : (2 * index + 2 - t));
+        java.math.BigInteger two = new java.math.BigInteger("2");
+        System.out.println( 0 == index.add(distance).compareTo(t) ? t.add(two) : index.add(index).add(two).subtract(t));
     }
 }

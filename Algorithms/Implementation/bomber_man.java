@@ -30,9 +30,9 @@ public class bomber_man {
                     if(state[i][j] == t) {
                         state[i][j] = timer;
                         if(i > 0) state[i - 1][j] = timer;
-                        if(i < R - 1) state[i + 1][j] = timer;
+                        if(i < R - 1 && state[i + 1][j] != t) state[i + 1][j] = timer;
                         if(j > 0) state[i][j - 1] = timer;
-                        if(j < C - 1) state[i][j + 1] = timer;
+                        if(j < C - 1 && state[i][j + 1] != t) state[i][j + 1] = timer;
                     }
         }
 
@@ -44,6 +44,7 @@ public class bomber_man {
         if(timer % 2 != 1) {
             for(int i = 0; i < R; i++) {
                 for(int j = 0; j < C; j++) {
+        //            System.out.print(state[i][j]);
                     System.out.print(state[i][j] == timer ? '.' : 'O');
                 }
                 System.out.println("");

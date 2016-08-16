@@ -17,10 +17,15 @@ public class bomber_man {
                 state[i][j] = line.charAt(j) == 'O' ? state[i][j] = 3 : 5;
         }
 
-        if(N == 1 || N == 2) {
-            display(N, state, R, C);
+        if(N == 1) {
+            display(5, state, R, C);
+            return;
+        } else if( N == 2 ) {
+            displayFull(state, R, C);
             return;
         }
+
+        System.out.println("after");
 
         int timer = 0;
         for(int t = 3; t <= N; t++) {
@@ -37,25 +42,29 @@ public class bomber_man {
         }
 
         //display the result
-        display(timer, state, R, C);
+        if(timer % 2 == 1) {
+            displayFull(state, R, C);
+        } else {
+            display(timer, state, R, C);
+        }
+    }
+
+    private static void displayFull(int[][] state, int R, int C) {
+        for(int i = 0; i < R; i++) {
+            for(int j = 0; j < C; j++) {
+                System.out.print("O");
+            }
+            System.out.println("");
+        }
     }
 
     private static void display(int timer, int[][] state, int R, int C) {
-        if(timer % 2 != 1) {
-            for(int i = 0; i < R; i++) {
-                for(int j = 0; j < C; j++) {
-        //            System.out.print(state[i][j]);
-                    System.out.print(state[i][j] == timer ? '.' : 'O');
-                }
-                System.out.println("");
+        for(int i = 0; i < R; i++) {
+            for(int j = 0; j < C; j++) {
+                //System.out.print(state[i][j]);
+                System.out.print(state[i][j] == timer ? '.' : 'O');
             }
-        } else {
-            for(int i = 0; i < R; i++) {
-                for(int j = 0; j < C; j++) {
-                    System.out.print("O");
-                }
-                System.out.println("");
-            }
+            System.out.println("");
         }
     }
 }

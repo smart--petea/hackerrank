@@ -18,30 +18,16 @@ public class bomber_man {
         }
 
         if(N == 1) {
-		for(i = 0; i < R; i++) {
-		    for(j = 0; j < C; j++) {
-			if(state[i][j] ==  3) {
-				System.out.print("O");
-			} else {
-				System.out.print(".");
-			}
-		    }
-		    System.out.println("");
-		}
+	    display(1, state, R, C);
             return;
-        } else if( N == 2) {
-		for(i = 0; i < R; i++) {
-		    for(j = 0; j < C; j++) 
-			System.out.print("O");
-		    
-		    System.out.println("");
-		}
+        } else if( N % 2 == 0) {
+	    displayPassive(state, R, C);
             return;
         }
 
         int timer;
         for(int t = 3; t <= N; t = t + 2) {
-            timer = t + 3;
+            timer = t + 4;
             for(i = 0; i < R; i++) 
                 for(j = 0; j < C; j++) 
                     if(state[i][j] == t) {
@@ -51,37 +37,34 @@ public class bomber_man {
                         if(j > 0) state[i][j - 1] = timer;
                         if(j < C - 1 && state[i][j + 1] != t) state[i][j + 1] = timer;
                     }
+		//if(t > N - 5) display(t, state, R, C);
         }
 	
 	if(N % 2 == 1) {
 		display(N, state, R, C);
 	} else {
-		displayPassive(N, state, R, C);
+		displayPassive(state, R, C);
 	}
     }
 
-    private static void displayPassive(int timer, int[][] state, int R, int C) {
-        //System.out.println(timer);
+    private static void displayPassive(int[][] state, int R, int C) {
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
-         //       System.out.print(state[i][j]);
-                System.out.print(state[i][j] == timer ? '.' : 'O');
+                System.out.print('O');
             }
             System.out.println("");
         }
     }
 
     private static void display(int timer, int[][] state, int R, int C) {
-        System.out.println("timer: ");
-        System.out.println(timer);
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
-                System.out.print(state[i][j]);
-		//if(state[i][j] > timer && state[i][j] != timer + 3) {
-		//	System.out.print("O");
-		//} else {
-		//	System.out.print(".");
-		//}
+                //System.out.print(state[i][j]);
+		if(state[i][j] > timer && state[i][j] != timer + 4) {
+			System.out.print("O");
+		} else {
+			System.out.print(".");
+		}
             }
             System.out.println("");
         }

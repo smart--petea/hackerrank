@@ -18,17 +18,29 @@ public class bomber_man {
         }
 
         if(N == 1) {
-            display(5, state, R, C);
+		for(i = 0; i < R; i++) {
+		    for(j = 0; j < C; j++) {
+			if(state[i][j] ==  3) {
+				System.out.print("O");
+			} else {
+				System.out.print(".");
+			}
+		    }
+		    System.out.println("");
+		}
             return;
-        } else if( N == 2 ) {
-            displayFull(state, R, C);
+        } else if( N == 2) {
+		for(i = 0; i < R; i++) {
+		    for(j = 0; j < C; j++) 
+			System.out.print("O");
+		    
+		    System.out.println("");
+		}
             return;
         }
 
-        System.out.println("after");
-
-        int timer = 0;
-        for(int t = 3; t <= N; t++) {
+        int timer;
+        for(int t = 3; t <= N; t = t + 2) {
             timer = t + 3;
             for(i = 0; i < R; i++) 
                 for(j = 0; j < C; j++) 
@@ -40,29 +52,36 @@ public class bomber_man {
                         if(j < C - 1 && state[i][j + 1] != t) state[i][j + 1] = timer;
                     }
         }
-
-        //display the result
-        if(timer % 2 == 1) {
-            displayFull(state, R, C);
-        } else {
-            display(timer, state, R, C);
-        }
+	
+	if(N % 2 == 1) {
+		display(N, state, R, C);
+	} else {
+		displayPassive(N, state, R, C);
+	}
     }
 
-    private static void displayFull(int[][] state, int R, int C) {
+    private static void displayPassive(int timer, int[][] state, int R, int C) {
+        //System.out.println(timer);
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
-                System.out.print("O");
+         //       System.out.print(state[i][j]);
+                System.out.print(state[i][j] == timer ? '.' : 'O');
             }
             System.out.println("");
         }
     }
 
     private static void display(int timer, int[][] state, int R, int C) {
+        System.out.println("timer: ");
+        System.out.println(timer);
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
-                //System.out.print(state[i][j]);
-                System.out.print(state[i][j] == timer ? '.' : 'O');
+                System.out.print(state[i][j]);
+		//if(state[i][j] > timer && state[i][j] != timer + 3) {
+		//	System.out.print("O");
+		//} else {
+		//	System.out.print(".");
+		//}
             }
             System.out.println("");
         }

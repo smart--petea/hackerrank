@@ -3,9 +3,10 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 class Cross {
-    private static List<Cross> crosses = new LinkedList<>();
+    private static LinkedList<Cross> crosses = new LinkedList<Cross>();
     private static char[][] table;
     private static int N;
     private static int M;
@@ -19,21 +20,47 @@ class Cross {
         N = scanner.nextInt();
         M = scanner.nextInt();
 
-        for(int i = 0; i < N; i++) table[i] = scanner.next().toCharArray();
+	table = new char[N][M];
+
+        for(int i = 0; i < N; i++) {
+	 table[i] = scanner.next().toCharArray();
+	}
     }
 
     public static int process() {
         fillTable();
 
-        for(int i = 0; i < N; i++) 
-            for(int j = 0; j < M; j++)
-                if(table[i][j] == 'G') generateCrosses(i, j);
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < M; j++) {
+                if(table[i][j] == 'G') {
+		    generateCrosses(i, j);
+		}
+	    }
+	}
 
         return getMaximum();
     }
 
     public static int getMaximum() {
-        return -1;
+	int prod = 0;
+	int prodFinal = 0;
+
+	Cross tmp = crosses.removeFirst(); 
+	ListIterator<Cross> li = crosses.listIterator();
+
+	while(crosses.isEmpty() == false) {
+		tmp = crosses.removeFirst();
+		li = crosses.listIterator();
+		
+		while(li.hasNext()) {
+			prod = tmp.size * li.next().size;
+			if(prod > prodFinal) {
+				prodFinal = prod;
+			}
+		}
+	}
+
+	return prodFinal;
     }
 
     Cross(int x, int y, int sz) {
@@ -45,10 +72,14 @@ class Cross {
     private static void generateCrosses(int x, int y) {
         int i = 0;
 
-        int height = table.length;
-        int width = table[0].length;
+	//System.out.print(x);
+	//System.out.print(' ');
+	//System.out.println(y);
 
-        while(x - i > 0 && x + i < height && y - i > 0 && y + i < width && table[x - i][y] == 'G' && table[x + i][y] == 'G' && table[x][y - i] == 'G' && table[x][y + i] == 'G') crosses.add(new Cross(x, y, ++i));
+        while(x - i >= 0 && x + i < N && y - i >= 0 && y + i < M && table[x - i][y] == 'G' && table[x + i][y] == 'G' && table[x][y - i] == 'G' && table[x][y + i] == 'G') {
+		 crosses.add(new Cross(x, y, ++i));
+		//System.out.println(i);
+	}
     }
 }
 

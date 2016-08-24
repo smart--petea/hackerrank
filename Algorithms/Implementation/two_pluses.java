@@ -41,11 +41,22 @@ class Cross {
         return getMaximum();
     }
 
+    public boolean overlap(Cross crs) {
+	int minn = Math.min(crs.size, size);
+	int maxx = Math.max(crs.size, size);
+
+	int idiff = Math.abs(crs.i - i);
+	int jdiff = Math.abs(crs.j - j);
+
+	return (idiff < minn && jdiff < maxx) || (idiff < maxx && jdiff < minn);
+    }
+
     public static int getMaximum() {
 	int prod = 0;
 	int prodFinal = 0;
 
 	Cross tmp = crosses.removeFirst(); 
+	Cross tmpFromLst;
 	ListIterator<Cross> li = crosses.listIterator();
 
 	while(crosses.isEmpty() == false) {
@@ -53,7 +64,10 @@ class Cross {
 		li = crosses.listIterator();
 		
 		while(li.hasNext()) {
-			prod = tmp.size * li.next().size;
+			tmpFromLst = li.next();
+			if(tmp.overlap(tmpFromLst)) continue;
+
+			prod = (4 * tmp.size - 3) * (4  * tmpFromLst.size - 3);
 			if(prod > prodFinal) {
 				prodFinal = prod;
 			}
@@ -68,6 +82,10 @@ class Cross {
         j = y;
         size = sz;
     }
+
+    public int aria() {
+	return 4*i - 3;
+	}
 
     private static void generateCrosses(int x, int y) {
         int i = 0;

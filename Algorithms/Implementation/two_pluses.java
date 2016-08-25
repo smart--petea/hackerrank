@@ -44,11 +44,12 @@ class Cross {
     public boolean overlap(Cross crs) {
 	int minn = Math.min(crs.size, size);
 	int maxx = Math.max(crs.size, size);
+	int sumSize = crs.size + size;
 
 	int idiff = Math.abs(crs.i - i);
 	int jdiff = Math.abs(crs.j - j);
 
-	return (idiff < minn && jdiff < maxx) || (idiff < maxx && jdiff < minn);
+	return (idiff == 0 && jdiff < sumSize) || (jdiff == 0 && idiff < sumSize)  || (idiff < minn && jdiff < maxx) || (idiff < maxx && jdiff  < minn);
     }
 
     public static int getMaximum() {
@@ -69,6 +70,7 @@ class Cross {
 
 			prod = (4 * tmp.size - 3) * (4  * tmpFromLst.size - 3);
 			if(prod > prodFinal) {
+				System.out.println("(" + tmp.i + "," + tmp.j + "-"+ tmp.size + ") (" + tmpFromLst.i + "," + tmpFromLst.j + "-" + tmpFromLst.size + ") - " + prod);
 				prodFinal = prod;
 			}
 		}

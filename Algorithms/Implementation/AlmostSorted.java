@@ -113,14 +113,20 @@ public class AlmostSorted {
             return;
         }
 
-        if(ar[firstSwp.l] < ar[secondSwp.r]) {
-            if(secondSwp.r == ar.length - 1) {
-                printSwap(firstSwp.r + 1, secondSwp.r + 1);
+        //l-l
+        if(ar[secondSwp.l] < ar[firstSwp.r] && ar[firstSwp.l] < ar[secondSwp.r]) {
+            if(firstSwp.l == 0 || ar[firstSwp.l - 1] < ar[secondSwp.l]) {
+                printSwap(firstSwp.l + 1, secondSwp.l + 1);
                 return;
-            } else if(ar[firstSwp.r] < ar[secondSwp.r + 1]) {
-                printSwap(firstSwp.r + 1, secondSwp.r + 1);
+            }
+        }
+
+        //l-r
+        if(ar[firstSwp.l] > ar[secondSwp.l] && ar[secondSwp.r] < ar[firstSwp.r]) {
+            if( (firstSwp.l == 0 || ar[firstSwp.l - 1] < ar[secondSwp.r]) && (secondSwp.r == ar.length - 1 || ar[firstSwp.l] < ar[secondSwp.r + 1])) {
+                printSwap(firstSwp.l + 1, secondSwp.r + 1);
                 return;
-            } 
+            }
         }
 
         printNo();
